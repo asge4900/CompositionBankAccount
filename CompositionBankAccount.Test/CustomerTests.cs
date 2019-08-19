@@ -225,11 +225,11 @@ namespace CompositionBankAccount.Test
 
             Customer customer = new Customer(accounts);
 
-            //decimal exptectedRating = 5;
+            decimal exptectedRating = 5;
 
-            //decimal actualRating = customer.Rating;
+            decimal actualRating = customer.Rating;
 
-            //Assert.Equal(exptectedRating, actualRating);
+            Assert.Equal(exptectedRating, actualRating);
         }
     }
 }

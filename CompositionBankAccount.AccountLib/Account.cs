@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CompositionBankAccount.Entities
 {
-    public class Account
+    public class Account: Entity
     {
         #region Fields
-        private int id;
-        private decimal balance;
-        private DateTime created;
+        protected string accountNumber;
+        protected decimal balance;
+        protected DateTime created;
+        protected decimal creditlimit;
+        protected List<Transaction> transactions;
         #endregion
 
         /// <summary>
@@ -18,35 +21,28 @@ namespace CompositionBankAccount.Entities
         /// <param name="created">The date</param>
 
         #region Constructors
-
         public Account()
         {
 
         }
-
-        public Account(int id, decimal balance, DateTime created)
+        public Account(int id, string accountNumber, decimal balance, DateTime created, decimal creditLimit, List<Transaction>transactions)
+            :base(id)
         {
-            Id = id;
+            AccountNumber = accountNumber;
             Balance = balance;
             Created = created;
+            CreditLimit = creditlimit;
+            Transactions = transactions;
+        }
+        public Account(string accountNumber, decimal balance, DateTime created, decimal creditLimit, List<Transaction> transactions)
+            :this(default, accountNumber, balance, created, creditLimit, transactions)
+        {
+
         }
         #endregion
 
-        #region Properties
-        public int Id
-        {
-            get
-            {
-                return id;
-            }
-            set
-            {
-                //if (id < 1)
-                //    throw new ArgumentException("Must be higher than zero");                               
-                id = value;
-            }
-        }
-
+        #region Properties  
+        public string AccountNumber { get; set; }
         public decimal Balance
         {
             get
@@ -65,7 +61,9 @@ namespace CompositionBankAccount.Entities
             }
         }
 
-        public DateTime Created { get { return created; } set { created = value; } }
+        public DateTime Created { get => created; set => created = value; }
+        public decimal CreditLimit { get; set; }
+        public List<Transaction> Transactions { get; set; }
         #endregion
 
 

@@ -4,24 +4,30 @@ using System.Text;
 
 namespace CompositionBankAccount.Entities
 {
-    public class Customer
-    {
-        private int id;
+    public class Customer: Person
+    {       
         private List<Account> accounts;
 
-        public Customer(List<Account> accounts)
+        public Customer(List<Account>accounts)
+        {
+            Accounts = accounts;
+        }
+        public Customer(int id, string firstname, string lastname, string ssn, List<Account>accounts)
+            :base(firstname, lastname, ssn)
         {
             Accounts = accounts;
         }
 
-        public Customer(int id, List<Account> accounts)
+        public Customer(string firstname, string lastname, string ssn, List<Account> accounts)
+            :this(default, firstname, lastname, ssn, accounts)
         {
-            Id = id;
-            Accounts = accounts;
-        }
 
-        public int Id { get => id; set => id = value; }
+        }
+        
         public List<Account> Accounts { get => accounts; set => accounts = value; }
+        public decimal AmountFee { get; set; }
+        public int MonthlyFreeTransactions { get; set; }
+        public decimal TransactionFee { get; set; }
         public int Rating {
             get
             {
@@ -31,7 +37,7 @@ namespace CompositionBankAccount.Entities
                     return 2;
                 else if (GetDebts() >= 250_000 && GetDebts() <= 2_500_000 && GetAssets() >= 50_000 && GetAssets() <= 1_250_000)
                     return 3;
-                else if (GetDebts() > 0 && GetDebts() < 250_000 && GetAssets() >0 && GetAssets() < 50_000)
+                else if (GetDebts() > 0 && GetDebts() < 250_000 && GetAssets() > 0 && GetAssets() < 50_000 && GetDebts() < GetAssets())
                     return 4;
                 else if (GetDebts() > 0 && GetDebts() < 250_000 && GetAssets() > 0 && GetAssets() < 50_000 && GetDebts() > GetAssets())
                     return 5;
@@ -63,6 +69,14 @@ namespace CompositionBankAccount.Entities
         public decimal GetTotalBalance()
         {
             return GetDebts() * -1 + GetAssets();
+        }
+        public decimal GetTotalFeesFor(DateTime year)
+        {
+            return 0;
+        }
+        public decimal GetTotalFeesFor(DateTime from, DateTime to)
+        {
+            return 0;
         }
     }
 }

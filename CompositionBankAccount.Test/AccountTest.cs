@@ -6,13 +6,13 @@ namespace CompositionBankAccount.Test
 {
     public class AccountTest
     {
-        [Fact]
-        public void validate()
-        {
+        //[Fact]
+        //public void validate()
+        //{
 
-            Account account = new Account(1, 100, DateTime.Today);
+        //    Account account = new Account(1, 100, DateTime.Today);
 
-        }
+        //}
 
 
         [Fact]
