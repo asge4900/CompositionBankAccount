@@ -5,9 +5,12 @@ using System.Text;
 namespace CompositionBankAccount.Entities
 {
     public class Customer: Person
-    {       
+    {
+        #region Fields
         private List<Account> accounts;
+        #endregion
 
+        #region Constructors
         public Customer(List<Account>accounts)
         {
             Accounts = accounts;
@@ -17,13 +20,14 @@ namespace CompositionBankAccount.Entities
         {
             Accounts = accounts;
         }
-
         public Customer(string firstname, string lastname, string ssn, List<Account> accounts)
             :this(default, firstname, lastname, ssn, accounts)
         {
 
         }
-        
+        #endregion
+
+        #region Properties
         public List<Account> Accounts { get => accounts; set => accounts = value; }
         public decimal AmountFee { get; set; }
         public int MonthlyFreeTransactions { get; set; }
@@ -45,7 +49,9 @@ namespace CompositionBankAccount.Entities
                     return 0;
             }
         }
+        #endregion
 
+        #region Methods
         public decimal GetDebts()
         {
             decimal debt = 0;
@@ -78,5 +84,6 @@ namespace CompositionBankAccount.Entities
         {
             return 0;
         }
+        #endregion
     }
 }

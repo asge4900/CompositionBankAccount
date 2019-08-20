@@ -58,17 +58,25 @@ namespace CompositionBankAccount.Test
             Assert.Equal(expectedBalance, actualBalance);
         }
 
-
         [Theory]
         [InlineData(-1000000000)]
         [InlineData(1000000000)]
-        public void ValidateBalance(decimal invalidbalance)
+        public void ValidateBalance_ValidValuesshouldReturnFalse(decimal invalidbalance)
         {
 
             (bool isValid, string errMsg) = Account.ValidateBalance(invalidbalance);
 
             Assert.False(isValid, "Balance should be valid");
 
+        }
+
+        [Theory]
+        [InlineData("654")]
+        public void ValidateAcountNumber_ValidValuesshouldReturnFalse(string accountNumber)
+        {
+            (bool isValid, string errMsg) = Account.ValidateAccountNumber(accountNumber);
+
+            Assert.False(isValid, "AcountNumber should be valid");
         }
     }
 }

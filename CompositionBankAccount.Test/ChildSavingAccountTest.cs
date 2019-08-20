@@ -11,14 +11,21 @@ namespace CompositionBankAccount.Test
         [Fact]
         public void test()
         {
-            Account account = new Account()
+            Transaction transaction = new Transaction("", "", 1, DateTime.Now);
+
+
+            List<Transaction> transactions = new List<Transaction>()
             {
-                Created = DateTime.Now
+                transaction
             };
 
-            //ChildSavingAccount childSavingAccount = new ChildSavingAccount("", 4, DateTime.Now, 4, "", 7);
+            ChildSavingAccount childSavingAccount = new ChildSavingAccount("", 4, DateTime.Now, 4, transactions, "", 7);
 
+            DateTime exptedDate = DateTime.Now.AddYears(7);
 
+            DateTime actualDate = childSavingAccount.CanBeWithDrawedFrom();
+
+            Assert.Equal(exptedDate, actualDate);
         }
     }
 }

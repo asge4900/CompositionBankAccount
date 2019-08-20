@@ -42,7 +42,7 @@ namespace CompositionBankAccount.Entities
         #endregion
 
         #region Properties  
-        public string AccountNumber { get; set; }
+        public string AccountNumber { get => accountNumber; set => accountNumber = value; }
         public decimal Balance
         {
             get
@@ -60,20 +60,17 @@ namespace CompositionBankAccount.Entities
                     balance = value;
             }
         }
-
         public DateTime Created { get => created; set => created = value; }
-        public decimal CreditLimit { get; set; }
-        public List<Transaction> Transactions { get; set; }
+        public decimal CreditLimit { get => creditlimit; set => creditlimit = value; }
+        public List<Transaction> Transactions { get => transactions; set => transactions = value; }
         #endregion
-
 
         #region Methods
         public Account(decimal initalBalance)
         {
 
         }
-
-        public void Withdraw(decimal amount)
+        public virtual void Withdraw(decimal amount)
         {
             string message = "";
             if (amount <= 0)
@@ -83,8 +80,7 @@ namespace CompositionBankAccount.Entities
             else
                 balance -= amount;
         }
-
-        public void Desposit(decimal amount)
+        public virtual void Desposit(decimal amount)
         {
             string message = "";
             if (amount <= 0)
@@ -94,14 +90,10 @@ namespace CompositionBankAccount.Entities
             else
                 balance += amount;
         }
-
         public int GetDaysSinceCreation()
         {
             return (DateTime.Now - created).Days;
         }
-
-
-
         public static (bool isValid, string errorMessage) ValidateBalance(decimal balance)
         {
             if (balance < -999_999_999)
@@ -110,6 +102,30 @@ namespace CompositionBankAccount.Entities
                 return (false, "Saldoen er for høj");
             else
                 return (true, "");
+        }
+        public static (bool isValid, string errorMessage) ValidateAccountNumber(string accountNumber)
+        {
+            if (!accountNumber.StartsWith("123412345"))
+            {
+                return (false, "Must start with 123412345");
+            }
+            else if (accountNumber.Length != 19)
+            {
+                return (false, "Must be 19 characters");
+            }
+            else if (!int.TryParse(accountNumber, out int result))
+            {
+                return (false, "Only numbers");
+            }
+            return (true, "");
+        }
+        public static (bool isValid, string errorMessage) ValidateCreatedDate(DateTime createdDate)
+        {
+            return (true, "");
+        }
+        public static (bool isValid, string errorMessage) ValidateCreditLimit(decimal creditLimit)
+        {
+            return (true, "");
         }
         #endregion
     }
